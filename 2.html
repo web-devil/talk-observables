@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Observables</title>
+    </head>
+    <body>
+        <h1>Multiple subscriptions! (SPAs ;) )</h1>
+        <script src="print.js"></script>
+        <script src="rx7.1.js"></script>
+        <script>
+            const myObservable = rxjs.Observable.create((observer) => {
+                observer.next('foo');
+                setTimeout(() => observer.next('bar'), 2000);
+                setTimeout(() => observer.next('baz'), 4000);
+                setTimeout(() => observer.next('boo'), 6000);
+                setTimeout(
+                    () =>
+                        observer.next(
+                            'What is the output without any subscriber?'
+                        ),
+                    6000
+                );
+            });
+
+            myObservable.subscribe((value) =>
+                print(
+                    '1st subscriber ' +
+                        new Date().toLocaleTimeString() +
+                        ' ' +
+                        value
+                )
+            );
+
+            myObservable.subscribe((value) =>
+                print(
+                    '2nd subscriber ' +
+                        new Date().toLocaleTimeString() +
+                        ' ' +
+                        value
+                )
+            );
+        </script>
+    </body>
+</html>

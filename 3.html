@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Observables</title>
+    </head>
+    <body>
+        <h1>Unsubscribe (Lifecycle)</h1>
+        <script src="print.js"></script>
+        <script src="rx7.1.js"></script>
+        <script>
+            const myObservable = rxjs.Observable.create((observer) => {
+                observer.next('foo');
+                setTimeout(() => observer.next('bar'), 2000);
+                setTimeout(() => observer.next('baz'), 4000);
+                setTimeout(() => observer.next('boo'), 6000);
+
+                return {
+                    unsubscribe: () => {
+                        setTimeout(() => {
+                            print('Clean up happening INSIDE Observable');
+                            print('What about unsubscribe BEFORE last emit?');
+                        }, 1000);
+                    },
+                };
+            });
+
+            const mySubscription = myObservable.subscribe((value) =>
+                print(new Date().toLocaleTimeString() + ' ' + value)
+            );
+
+            setTimeout(() => {
+                print('Calling mySubscription.unsubscribe()');
+                mySubscription.unsubscribe();
+            }, 8000);
+        </script>
+    </body>
+</html>
