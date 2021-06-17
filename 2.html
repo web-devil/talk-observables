@@ -15,7 +15,6 @@
                 observer.next('foo');
                 setTimeout(() => observer.next('bar'), 2000);
                 setTimeout(() => observer.next('baz'), 4000);
-                setTimeout(() => observer.next('boo'), 6000);
                 setTimeout(
                     () =>
                         observer.next(
@@ -34,14 +33,16 @@
                 )
             );
 
-            myObservable.subscribe((value) =>
-                print(
-                    '2nd subscriber ' +
-                        new Date().toLocaleTimeString() +
-                        ' ' +
-                        value
-                )
-            );
+            setTimeout(() => {
+                myObservable.subscribe((value) =>
+                    print(
+                        '2nd subscriber ' +
+                            new Date().toLocaleTimeString() +
+                            ' ' +
+                            value
+                    )
+                );
+            }, 4001);
         </script>
     </body>
 </html>

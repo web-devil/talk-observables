@@ -34,7 +34,17 @@
             setTimeout(() => {
                 print('Calling mySubscription.unsubscribe()');
                 mySubscription.unsubscribe();
-            }, 8000);
+            }, 3000);
+
+            const mySubscription2 = myObservable.subscribe((value) =>
+                print(new Date().toLocaleTimeString() + ' ' + value)
+            );
+
+            setTimeout(() => {
+                const mySubscriptio3 = myObservable.subscribe((value) =>
+                    print(new Date().toLocaleTimeString() + ' ' + value)
+                );
+            }, 4000);
         </script>
     </body>
 </html>

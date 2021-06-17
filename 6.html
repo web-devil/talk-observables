@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Observables</title>
+    </head>
+    <body>
+        <h1>Converting into Observables</h1>
+        <button>Click me!</button>
+        <script src="print.js"></script>
+        <script src="rx7.1.js"></script>
+        <script>
+            document
+                .querySelector('button')
+                .addEventListener('click', (event) => {
+                    event.preventDefault();
+                    console.log(event);
+                });
+
+            // From an event
+            const clickObservable = rxjs
+                .fromEvent(document.querySelector('button'), 'click')
+                .pipe(rxjs.operators.throttleTime(1000));
+
+            clickObservable
+                .pipe(rxjs.operators.throttleTime(2000))
+                .subscribe((value) => {
+                    print(value);
+                });
+
+            clickObservable
+                .pipe(
+                    rxjs.operators.map((currentObservableValue) => {
+                        return 'click at ' + new Date().toLocaleTimeString();
+                    })
+                )
+                .subscribe((value) => {
+                    print('2nd pipe' + value);
+                });
+        </script>
+    </body>
+</html>

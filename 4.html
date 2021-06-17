@@ -8,51 +8,21 @@
     </head>
     <body>
         <h1>Converting into Observables</h1>
-        <button>Click me!</button>
         <script src="print.js"></script>
         <script src="rx7.1.js"></script>
         <script>
             // From one or multiple values
-            rxjs.of('foo', 'bar').subscribe((value) => {
-                print(
-                    'From one or multiple values ' +
-                        new Date().toLocaleTimeString() +
-                        ' ' +
-                        value
-                );
+            rxjs.of({ student: '1' }, { student: '2' }).subscribe((value) => {
+                print('OF ' + new Date().toLocaleTimeString() + ' ' + value);
             });
 
             // From array of values
-            rxjs.from([1, 2, 3]).subscribe((value) => {
-                print(
-                    'From array of values ' +
-                        new Date().toLocaleTimeString() +
-                        ' ' +
-                        value
-                );
-            });
-
-            // From an event
-            rxjs.fromEvent(document.querySelector('button'), 'click')
-                .pipe(
-                    rxjs.operators.throttleTime(1000),
-                    rxjs.operators.map(() => {
-                        return 'click at ' + new Date().toLocaleTimeString();
-                    })
-                )
-                .subscribe((value) => {
-                    print(value);
-                });
-
-            // From a callback (last argument is a callback)
-            function exists(path, callback) {
-                print('exists called ' + path);
-                callback();
-            }
-
-            var exists = rxjs.bindCallback(exists);
-            exists('file.txt').subscribe((exists) =>
-                print('Does file exist?', exists)
+            rxjs.from([{ student: '3' }, { student: '4' }]).subscribe(
+                (value) => {
+                    print(
+                        'FROM ' + new Date().toLocaleTimeString() + ' ' + value
+                    );
+                }
             );
         </script>
     </body>

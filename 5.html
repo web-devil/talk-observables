@@ -2,21 +2,25 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Observables</title>
     </head>
     <body>
-        <h1>Your turn in Breakout Groups!</h1>
-        <ol>
-            <li>Operators: Transformational, Filtering & Conditional</li>
-            <li>Operators: Multicast, Utility & Error Handling</li>
-            <li>Operators: Conditional and Boolean Operators</li>
-            <li>Subject (uni-/multicast)</li>
-            <li>BehaviorSubject und ReplaySubject</li>
-        </ol>
-        <h2>Next time</h2>
-        <ul>
-            <li>Summary of Observables</li>
-            <li>Testing</li>
-        </ul>
+        <h1>Converting into Observables</h1>
+        <script src="print.js"></script>
+        <script src="rx7.1.js"></script>
+        <script>
+            // From a callback (last argument is a callback)
+            function fnWithCallback(path, callback) {
+                print('exists called ' + path);
+                callback('DONE');
+            }
+
+            var fnWithCallbackObservable = rxjs.bindCallback(fnWithCallback);
+            fnWithCallbackObservable('file.txt').subscribe((value) =>
+                print('Does file exist?', value)
+            );
+        </script>
     </body>
 </html>
